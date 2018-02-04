@@ -1,0 +1,52 @@
+---
+route:
+  # Slack channel
+  receiver: slack
+  group_wait: 10s
+  group_by:
+    - alertname
+    - instance
+    - service
+  # all alerts that do not match the following child routes
+  # will remain at the root node and be dispatched to Slack
+  routes:
+  - receiver: notify-home
+    group_wait: 1m
+    continue: true  # evaluate next route
+    match:
+      severity: critical
+
+
+receivers:
+  - name: slack
+    slack_configs:
+      - send_resolved: true
+        text: "{{ .CommonAnnotations.description }}"
+        icon_emoji: ':{{ if eq .GroupLabels.severity "critical" }}fire{{ else }}warning{{ end }}:'
+        username: 'Prometheus'
+        channel: '#alerts'
+        api_url: 'https://hooks.slack.com/services/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'
+
+  - name: notify-team
+    email_configs:
+    - send_resolved: true
+      to: "Home <home@zx>"
+      from: "Prometheus <no-reply@zx>"
+      # the SMTP host through which emails are sent
+      #smarthost: "zx:25"
+      require_tls: false
+      html: '{{ template "email.default.html" . }}'
+      # headers:
+      #  subject: '{{ template "slack.default.title" . }}'
+
+
+inhibit_rules:
+  # inhibit warning alert if critical alert is received
+  - source_match:
+      severity: critical
+    target_match:
+      severity: warning
+    equal: 
+    - alertname
+    - instance
+    - service
