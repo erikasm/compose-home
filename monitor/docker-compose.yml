@@ -29,8 +29,6 @@ services:
       - "9090:9090"
     networks:
       - monitor-net
-    depends_on:
-      - prometheus_config_hook
     labels:
       org.label-schema.group: "monitoring"
   
@@ -48,8 +46,6 @@ services:
       - "9093:9093"
     networks:
       - monitor-net
-    depends_on:
-      - prometheus_config_hook
     labels:
       org.label-schema.group: "monitoring"
 
