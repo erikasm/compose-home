@@ -38,9 +38,9 @@ services:
     volumes: 
       - ./prometheus-config/:/etc/alertmanager/
     command:
-      - '-config.file=/etc/alertmanager/alertmanager.yml'
-      - '-storage.path=/alertmanager'
-      - '-web.external-url=http://zx:9093'
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=http://zx:9093'
     restart: unless-stopped
     ports:
       - "9093:9093"
