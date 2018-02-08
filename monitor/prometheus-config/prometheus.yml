@@ -21,6 +21,12 @@ scrape_configs:
         service: therm
         instance: pi
 
+  - job_name: weather-exporter
+    static_configs:
+    - targets: ['zx:9520']
+      labels:
+        service: weather
+        instance: zx
 
 alerting:
   alertmanagers:
