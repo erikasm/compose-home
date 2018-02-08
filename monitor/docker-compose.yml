@@ -85,3 +85,16 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
+  openweathermap:
+    image: erikasm/openweathermap_exporter
+    container_name: openweathermap
+    command:
+      - '--location=Vilnius,LT'
+      - '--apikey=609bfd3a9ad4333fadf3a1433345ee74'
+    restart: unless-stopped
+    ports:
+      - "9520:9520"
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
