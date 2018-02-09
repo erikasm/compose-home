@@ -1,0 +1,5 @@
+groups:
+- name: recording.rules
+  rules:
+  - record: sensor:temperature_celsius:idelta5m
+    expr: idelta(sensor_temperature_celsius[5m])
