@@ -1,5 +1,12 @@
 groups:
-- name: recording.rules
-  rules:
-  - record: sensor:temperature_celsius:idelta5m
-    expr: idelta(sensor_temperature_celsius[5m])
+  - name: recording.rules
+    rules:
+    - record: sensor:temperature_celsius:idelta5m
+      expr: idelta(sensor_temperature_celsius[5m])
+    - record: sensor:temperature_celsius:delta5m
+      expr: delta(sensor_temperature_celsius[5m])
+    - record: sensor:temperature_celsius:positive_idelta5m
+      expr: sensor:temperature_celsius:idelta5m{sensor="00000447c3cd"} >bool 0
+    - record: sensor:temperature_celsius:negative_idelta5m
+      expr: sensor:temperature_celsius:idelta5m{sensor="00000447c3cd"} <bool 0
+  
