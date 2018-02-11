@@ -28,6 +28,20 @@ scrape_configs:
         service: weather
         instance: zx
 
+  - job_name: cadvisor-exporter
+    static_configs:
+    - targets: ['cadvisor:18080']
+      labels:
+        service: cadvisor
+        instance: zx
+
+  - job_name: node-exporter
+    static_configs:
+    - targets: ['node_exporter:9100']
+      labels:
+        service: node
+        instance: zx
+
 alerting:
   alertmanagers:
   - scheme: http
