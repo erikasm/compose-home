@@ -132,7 +132,7 @@ services:
       - /dev/zfs:/dev/zfs
     restart: unless-stopped
     ports:
-      - 18080:8080
+      - 8080:8080
     network_mode: host
     labels:
       org.label-schema.group: "monitoring"
