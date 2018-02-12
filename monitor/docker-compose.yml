@@ -128,6 +128,8 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /cgroup:/cgroup:ro
+    devices:
+      - /dev/zfs:/dev/zfs
     restart: unless-stopped
     ports:
       - 18080:8080
