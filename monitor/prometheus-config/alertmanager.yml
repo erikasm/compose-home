@@ -33,7 +33,7 @@ receivers:
       to: "Home <home@zx>"
       from: "Prometheus <no-reply@zx>"
       # the SMTP host through which emails are sent
-      #smarthost: "zx:25"
+      smarthost: "zx:25"
       require_tls: false
       html: '{{ template "email.default.html" . }}'
       # headers:
