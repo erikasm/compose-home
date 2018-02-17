@@ -27,7 +27,7 @@ receivers:
         channel: '#alerts'
         api_url: 'https://hooks.slack.com/services/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'
 
-  - name: notify-team
+  - name: notify-home
     email_configs:
     - send_resolved: true
       to: "Home <home@zx>"
