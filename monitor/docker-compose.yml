@@ -53,7 +53,7 @@ services:
     image: cloudflare/unsee:latest
     container_name: unsee
     environment:
-      - ALERTMANAGER_URIS=default:http://alertmanager:9093
+      - ALERTMANAGER_URI=http://alertmanager:9093
     restart: unless-stopped
     ports:
       - "9099:8080"
