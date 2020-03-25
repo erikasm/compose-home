@@ -15,7 +15,7 @@ appdaemon:
       HASS:
         type: hass
         ha_url: !secret ha_api_url
-        ha_key: !secret ha_api_key
+        token: !secret ha_token
 hadashboard:
   dash_url: "http://0.0.0.0:5050"
 
