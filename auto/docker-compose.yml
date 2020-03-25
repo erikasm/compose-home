@@ -5,12 +5,13 @@ services:
     image: homeassistant/home-assistant:stable
     depends_on:
       - mqtt
+    ports:
+      - 8123:8123
     volumes:
       - ./homeassistant-config:/config
     environment:
       - TZ=Europe/Vilnius
     restart: unless-stopped
-    network_mode: host
 
   mqtt:
     container_name: mqtt
