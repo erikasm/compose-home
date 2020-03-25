@@ -1,7 +1,7 @@
 version: '3'
 services:
   homeassistant:
-    container_name: home-assistant
+    container_name: homeassistant
     image: homeassistant/home-assistant:stable
     depends_on:
       - mqtt
@@ -29,7 +29,7 @@ services:
     container_name: appdaemon
     image: acockburn/appdaemon:latest
     depends_on:
-      - home-assistant
+      - homeassistant
     ports:
       - 5050:5050
     volumes:
