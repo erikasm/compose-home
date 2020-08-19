@@ -6,7 +6,7 @@ default_config:
 #   base_url: example.duckdns.org:8123
 
 mqtt:
-  broker: mqtt
+  broker: 10.1.1.1
   discovery: true
 
 # Discover some devices automatically
@@ -36,15 +36,81 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+media_player:
+  - platform: samsungtv_encrypted
+    host: 10.1.1.32
+    token: ea8ce78ba81aeaaed475ca62947e5207
+    sessionid: 1
+    port: 8080
+
+camera:
+  - platform: mjpeg
+    mjpeg_url: http://10.1.1.18:2971/camera/stream
+    name: Basement Panel Camera
+  - platform: mjpeg
+    mjpeg_url: http://10.1.1.30:2971/camera/stream
+    name: Kids Clock Camera
+
 sensor:
   - platform: yr
-  - platform: time_date
-    display_options:
-      - 'time'
-      - 'date'
-      - 'date_time'
-      - 'date_time_utc'
-      - 'date_time_iso'
-      - 'time_date'
-      - 'time_utc'
-      - 'beat'
+  - platform: mqtt
+    state_topic: "wallpanel/basementpanel/sensor/battery"
+    name: "Basement Panel Battery Level"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.value }}'
+  - platform: mqtt
+    state_topic: "wallpanel/kidsclock/sensor/battery"
+    name: "Kids Clock Battery Level"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.value }}'
+  - platform: mqtt
+    state_topic: "wallpanel/kidsclock/sensor/light"
+    name: "Kids Clock Light Level"
+    unit_of_measurement: "lx"
+    value_template: '{{ value_json.value }}'
+  - platform: mqtt
+    state_topic: "wallpanel/mywallpanel/sensor/battery"
+    name: "WallPanel Battery Level"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.value }}'
+  - platform: mqtt
+    state_topic: "wallpanel/mywallpanel/sensor/light"
+    name: "WallPanel Light Level"
+    unit_of_measurement: "lx"
+    value_template: '{{ value_json.value }}'
+  - platform: waste_collection_schedule
+    name: "WasteSchedule"
+    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%Y.%m.%d")}}|{{value.date.strftime("%a")}}'
+#  - platform: time_date
+#    display_options:
+#      - 'time'
+#      - 'date'
+#      - 'date_time'
+#      - 'date_time_utc'
+#      - 'date_time_iso'
+#      - 'time_date'
+#      - 'time_utc'
+#      - 'beat'
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: "wallpanel/basementpanel/sensor/motion"
+    name: "BasementMotion"
+    payload_on: '{"value":true}'
+    payload_off: '{"value":false}'
+    device_class: motion 
+
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: "https://calendar.google.com/calendar/ical/50pcejh1kls5vg8bvcg28e4cfg%40group.calendar.google.com/public/basic.ics"
+
+panel_iframe:
+  node_red:
+    title: "Node Red"
+    icon: mdi:sitemap
+    url: "http://10.1.1.1:1880"
+
+tradfri:
+  allow_tradfri_groups: true
